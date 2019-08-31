@@ -85,7 +85,7 @@
     <a>
     <!--img id="loadingScreenBackground" src="" /-->
     <font size="96">MindGame warming up..</font><a />
-    <div id="x"></div>
+    <div id="x" alt="img here"></div>
     <font size="76"><a onclick="this.innerHTML = 'Test button works!'">Click on this text to try it!</a></font>>
   </div>
 
@@ -96,14 +96,14 @@
   </div>
 
   <div id="waitingScreen_2_5">
-    <img id="waitingScreenBackground" src="https://github.com/babblet/LiveHacksTeam5/blob/master/images/wait.png" />
+    <img id="waitingScreenBackground" src="https://raw.githubusercontent.com/babblet/LiveHacksTeam5/master/images/wait.png" />
   </div>
 
   <div id="pickNumberScreen_3_7">
-    <div id="button_1" src="https://github.com/babblet/LiveHacksTeam5/blob/master/images/1.png"></div>
-    <div id="button_2" src="https://github.com/babblet/LiveHacksTeam5/blob/master/images/2.png"></div>
-    <div id="button_3" src="https://github.com/babblet/LiveHacksTeam5/blob/master/images/3.png"></div>
-    <div id="button_4" src="https://github.com/babblet/LiveHacksTeam5/blob/master/images/4.png"></div>
+    <div id="button_1" src="https://raw.githubusercontent/babblet/LiveHacksTeam5/blob/master/images/1.png"></div>
+    <div id="button_2" src="raw.githubusercontent/babblet/LiveHacksTeam5/blob/master/images/2.png"></div>
+    <div id="button_3" src="raw.githubusercontent/babblet/LiveHacksTeam5/blob/master/images/3.png"></div>
+    <div id="button_4" src="raw.githubusercontent/babblet/LiveHacksTeam5/blob/master/images/4.png"></div>
   </div>
 
   <div id="takePictureScreen_4"> <!-- the round circle -->
@@ -114,8 +114,8 @@
   </div>
 
   <div id="evaluationScreen_8">
-    <div id="correctAnswer" src="https://github.com/babblet/LiveHacksTeam5/blob/master/images/right%20answer.png"></div>
-    <div id="wrongAnswer" src="https://github.com/babblet/LiveHacksTeam5/blob/master/images/losing%20screen.png"></div>
+    <div id="correctAnswer" src="raw.githubusercontent/babblet/LiveHacksTeam5/blob/master/images/right%20answer.png"></div>
+    <div id="wrongAnswer" src="raw.githubusercontent/babblet/LiveHacksTeam5/blob/master/images/losing%20screen.png"></div>
   </div>
 
   <div id="scoreScreen_9">
@@ -128,6 +128,19 @@
   <!-- SCRIPTS -->
 
   <script type="text/javascript">
+<<<<<<< HEAD
+=======
+
+
+    // Write your javascript code inside of the script tag
+
+    var state = {
+      current_screen: "loadingScreen_0",
+      user_id: stagecast.getUserId(),
+    }
+
+    const eventName = 'my_unique_event';
+>>>>>>> dd5a1caedd8049457ab64cc78d38c5305127e8c3
     window.addEventListener('load', () => {
       const ws = new WebSocket(`ws://stagecast.se/api/events/MindReader/ws?x-user-listener=1`);
 
