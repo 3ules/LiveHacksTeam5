@@ -16,5 +16,8 @@
     "url": "https://github.com/babblet/LiveHacksTeam5/issues"
   },
   "homepage": "https://github.com/babblet/LiveHacksTeam5#readme",
-  "dependencies": {}
+  "dependencies": {
+    "node": "^12.9.1",
+    "ws": "^7.1.2"
+  }
 }
