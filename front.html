@@ -42,7 +42,7 @@
       left: 100;
       width: 50%;
       height: 50%;
-    }   
+    }
 
     #button_4 {
       position: 'absolute';
@@ -50,7 +50,7 @@
       left: 0;
       width: 50%;
       height: 50%;
-    }         
+    }
 
     #redCameraCircle {
         background-color: #E64339;
@@ -60,7 +60,7 @@
         left: 50;
         width: 15%;
         height: 15%;
-        display: inline-block;        
+        display: inline-block;
     }
 
     #goButton {
@@ -68,9 +68,9 @@
         top: 50;
         left: 50;
         width: 25%;
-        height: 25%; 
+        height: 25%;
     }
-    
+
   </style>
 
 </head>
@@ -90,8 +90,8 @@
   </div>
 
   <div id="nameScreen_1">
-    <img id="nameScreenBackground" src="https://github.com/babblet/LiveHacksTeam5/blob/master/images/name%20screen.png"/>     
-    <!--img id="GoButton" scr= "https://github.com/babblet/LiveHacksTeam5/blob/master/images/name%20button.png"--> 
+    <img id="nameScreenBackground" src="https://github.com/babblet/LiveHacksTeam5/blob/master/images/name%20screen.png"/>
+    <!--img id="GoButton" scr= "https://github.com/babblet/LiveHacksTeam5/blob/master/images/name%20button.png"-->
     <a onclick="this.innerHTML = 'Test button works!'"><img id="GoButton" src= "https://github.com/babblet/LiveHacksTeam5/blob/master/images/name%20button.png"></a>
   </div>
 
@@ -128,62 +128,45 @@
   <!-- SCRIPTS -->
 
   <script type="text/javascript">
-
-    // Write your javascript code inside of the script tag
-
-    var state = {
-      current_screen: "loadingScreen_0",
-      user_id: stagecast.getUserId(),
-    }
-
-    const eventName = 'my_unique_event';
     window.addEventListener('load', () => {
       const ws = new WebSocket(`ws://stagecast.se/api/events/MindReader/ws?x-user-listener=1`);
-      let data = JSON.stringify({ email: "fkarlsson@solidsport.com", password: "Team5Team5" });
-      ws.send(data);
-      ws.send("hello world");
+
+      var state = {
+        current_screen: "loadingScreen_0",
+        user_id: stagecast.getUserId(),
+      }
+
+      ws_authenticate = () => {
+        ws.send(JSON.stringify({
+          token: stagecast.getToken(),
+        }))
+      }
+
+      let ws_send = (type, data) => {
+        ws.send(JSON.stringify({
+          type: type,
+          user: {
+            id: state.user_id,
+            ...data,
+          }
+        }));
+      }
+
+      ws.onmessage = (message) => {
+        let data = message.data.readAsText();
+        document.getElementById('x').innerHTML = data;
+        if (data === 'ok') {
+          ws_send('auth', {
+            name: 'something',
+          })
+        }
+      }
+
+      //INIT
+      ws.onopen = () => {
+        ws_authenticate();
+      }
     });
-
-
-    //IMAGE
-    //https://www.quora.com/How-do-you-insert-an-image-in-Javascript
-
-    //$(document).ready(function() {
-
-    //<img src="img.png" alt="MindReader IMG" height="42" width="42">
-    //img
-    var img = document.createElement("img");
-
-    img.src = "https://assets.website-files.com/5a61c6bb84cc4f0001c762eb/5ae7389ca9e2a22cadfb7cf1_Livehacks%20Logo-white-p-500.png";
-    var src = document.getElementById("x");
-
-    src.appendChild(img);
-
-    //     //src.src==image; //appendChild(img);
-    //});
-
-
-    //IMAGE 2
-    //https://hackernoon.com/replacing-html-content-using-javascript-9a3d36c56cc
-    //$(document).ready(function() {
-
-    function ReplacingImage() {
-      document.getElementById("x").src = "https://assets.website-files.com/5a61c6bb84cc4f0001c762eb/5aae73932e1ff94245794b45_Livehacks_logo.png"
-    }
-    //});
-    ReplacingImage();
-
-
-    //button
-    function changeText(id) {
-      id.innerHTML = "Test button works!";
-    }
-
-    window.addEventListener('load', () => {
-      const ws = new WebSocket(`ws://stagecast.se/api/events/${eventName}/ws?x-user-listener=1`);
-    });
-
-
   </script>
 
 </body>
