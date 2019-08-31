@@ -55,13 +55,16 @@
     }
 
     #nameText {
-      visibility: visible;  
+      visibility: visible;
       position: fixed;
-      top: 30%; 
-      left: 10%;
+      background-color: #EDD5D9;
+      top: 23%;
+      left: 9%;
       width: 82%;
-      height: 9%; 
-      z-index: 1000;       
+      height: 11%;
+      font-size: 30px;
+      padding-left: 30px;
+      z-index: 1000;
     }
 
     #redCameraCircle {
@@ -87,12 +90,15 @@
       width: 100%;
     }
     #waitingScreenBackground {
-      visibility: hidden;
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
       height: 100%;
       width: 100%;
     }
     #numberScreenBackground {
-      visibility: hidden;          
+      display: none;
       position: fixed;
       top: 0;
       left: 0;
@@ -108,15 +114,120 @@
       width: 100%;
     }
 
+    #takePictureScreen_4 {
+      display: none;
+    }
+
     #goButton {
-      position: 'absolute';
-      top: 50;
-      left: 50;
-      width: 25%;
-      height: 25%;
+      z-index: 1000;
+      position: fixed;
+      background-color: "#eac";
+      top: 36%;
+      left: 33%;
+      width: 34%;
+      height: 10%;
+    }
+
+    #goButtonImage {
+      height: 100%;
+      width: 100%;
+    }
+
+    #goButton2 {
+      visibility: hidden;
+      width: 100%;
+      height: 100%;
     }
   </style>
+    <script type="text/javascript">
+      const ws = new WebSocket('ws://stagecast.se/api/events/MindReader/ws');
 
+
+      var state = {
+        current_screen: "loadingScreen_0",
+        user_id: 1, //stagecast.getUserId(),
+        command_type: undefined,
+      }
+
+      var ws_authenticate = () => {
+        ws.send(JSON.stringify({
+          email: "fkarlsson@solidsport.com",//stagecast.getToken(),
+          password: "Team5Team5",
+        }));
+      }
+
+      var ws_send = (type, data) => {
+        ws.send(JSON.stringify({
+          type: type,
+          user: {
+            id: state.user_id,
+            ...data,
+          },
+        }));
+      }
+
+      let handle_message = (text) => {
+        if (state.command_type === 'command: game') {
+          if (text === '') {
+          } else if (text === 'choices') {
+            console.log(text);
+          }
+        }
+
+        state.command_type = text;
+      };
+
+      ws.onmessage = (message) => {
+        if(typeof message.data.text === 'function') {
+          message.data.text().then((text) => {
+            handle_message(text);
+          }).catch((e) => {
+            console.log(e);
+          });
+        } else {
+          let json = JSON.parse(message.data.text());
+          console.log(json);
+        }
+      }
+
+      let send_name = (input) => {
+        console.log(input);
+        ws_send('name', {
+          name: input,
+        })
+
+        document.getElementById('nameScreen_1').style.display = "none";
+        document.getElementById('waitingScreenBackground').style.display = "block";
+      }
+
+      let send_button_select_press = (input) => {
+        ws_send('user_number', {
+          number: input,
+        });
+      }
+
+      let send_button_guess_press = (input) => {
+        ws_send('user_guess', {
+          guess: input,
+        });
+      }
+
+      let take_picture = () => {
+        document.getElementById('waitingScreenBackground').style.display = "none";
+        document.getElementById('numberScreenBackground').style.display = "block";
+        ws_send('picture', {
+          picture: "Image data",
+        })
+      }
+
+      //INIT
+      ws.onopen = () => {
+        ws_authenticate();
+        //send_name('fabian');
+      }
+
+
+  </script>
 </head>
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
@@ -138,12 +249,14 @@
     <!--img id="GoButton" scr= "https://github.com/babblet/LiveHacksTeam5/blob/master/images/name%20button.png"-->
     <!--a onclick="this.innerHTML = 'Test button works!'"><img id="goButton" src= "https://github.com/babblet/LiveHacksTeam5/master/images/name_button.png"></a-->
 
-    <input id ="nameText" type="text">    
-    <input id ="nameSubmit" type="button" value="Get User Name(udid)" onclick="send_name(document.getElementById('nameSubmit').value);">
+    <input id="nameText" type="text" />
+    <div id="goButton" onclick="send_name(document.getElementById('nameText').value)">
+      <img id="goButtonImage" src="https://raw.githubusercontent.com/babblet/LiveHacksTeam5/master/images/name_button.png" />
+    </div>
 
   </div>
 
-  <div id="waitingScreen_2_5" class="screen">
+  <div id="waitingScreen_2_5"  class="screen">
     <img id="waitingScreenBackground" src="https://raw.githubusercontent.com/babblet/LiveHacksTeam5/master/images/wait.png">
   </div>
 
@@ -174,93 +287,6 @@
     <div id="resultScreen_10" class="screen">
     </div>
 
-
-    <!-- SCRIPTS -->
-
-    <script type="text/javascript">
-        const ws = new WebSocket('ws://stagecast.se/api/events/MindReader/ws');
-
-
-        var state = {
-          current_screen: "loadingScreen_0",
-          user_id: 1, //stagecast.getUserId(),
-          command_type: undefined,
-        }
-
-        var ws_authenticate = () => {
-          ws.send(JSON.stringify({
-            email: "fkarlsson@solidsport.com",//stagecast.getToken(),
-            password: "Team5Team5",
-          }));
-        }
-
-        var ws_send = (type, data) => {
-          ws.send(JSON.stringify({
-            type: type,
-            user: {
-              id: state.user_id,
-              ...data,
-            },
-          }));
-        }
-
-        let handle_message = (text) => {
-          if (state.command_type === 'command: game') {
-            if (text === '') {
-            } else if (text === 'choices') {
-
-            }
-          }
-
-          state.command_type = text;
-        };
-
-        ws.onmessage = (message) => {
-          if(typeof message.data.text !== 'function') {
-            let json = JSON.parse(message.data);
-            console.log(json);
-          } else {
-            message.data.text().then((text) => {
-              handle_message(text);
-            }).catch((e) => {
-              console.log(e);
-            });
-          }
-        }
-
-        let send_name = (input) => {
-          ws_send('name', {
-            name: input,
-          })
-        }
-
-        let send_button_select_press = (input) => {
-          ws_send('user_number', {
-            number: input,
-          });
-        }
-
-        let send_button_guess_press = (input) => {
-          ws_send('user_guess', {
-            guess: input,
-          });
-        }
-
-        let take_picture = () => {
-          ws_send('picture', {
-            picture: "Image data",
-          })
-        }
-
-        //INIT
-        ws.onopen = () => {
-          ws_authenticate();
-          send_name('fabian');
-        }
-
-
-    </script>
-
 </body>
 
-</html>>
+</html>

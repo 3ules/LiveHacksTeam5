@@ -26,6 +26,7 @@ let state = {
     users: {},
     game: {
         state: "new",
+        interval_id: undefined,
         user_scores: {},
     }
 }
@@ -42,27 +43,43 @@ const wp_user_send = (command, string) => {
     ws.send(string);
 }
 
-const wait_for_users = () => {
-
+const check_users_ready = () => {
+    if(state.game.state === "choices") {
+        let keys = Object.keys(state.users);
+        let index = 0;
+        while(index < keys.length) {
+            if (state.users[id].choice !== undefined) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 const game_start = () => {
     if(state.game.state === 'start') {
         wp_user_send('game', 'choices');
+        state.game.interval_id = setInterval(() => {
+            if(check_users_ready()) {
+                clearInterval(state.game.interval_id);
+                state.game.state = ''
+            }
+        }, 1000);
     }
 }
 
 const handleMessage = (m) => {
-    if(m.type === 'name' && m.user_id) {
-        state.users[m.user_id] = {
+    if(m.type === 'name' && m.user.id) {
+        state.users[m.user.id] = {
             name: m.user.name,
             guess: undefined,
             state: 'authenticated',
+            number: 0,
             score: 0,
         }
         console.log(Object.keys(state.users));
-    } else if(m.type === 'user_number' && m.user_id && state.game.state) {
-        state.users[m.user_id].number = m.number;
+    } else if(m.type === 'user_number' && m.user.id && state.game.state) {
+        state.users[m.user.id].number = m.user.number;
     } else if (m.type === 'game_command' && m.command) {
         if(m.command === 'start' && state.game.state === 'new') {
             state.game.state === 'start',
