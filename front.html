@@ -28,6 +28,49 @@
       height: 50%;
     }
 
+    #button_2 {
+      position: 'absolute';
+      top: 100;
+      left: 100;
+      width: 50%;
+      height: 50%;
+    }
+
+    #button_3 {
+      position: 'absolute';
+      top: 0;
+      left: 100;
+      width: 50%;
+      height: 50%;
+    }   
+
+    #button_4 {
+      position: 'absolute';
+      top: 100;
+      left: 0;
+      width: 50%;
+      height: 50%;
+    }         
+
+    #redCameraCircle {
+        background-color: #E64339;
+        position: 'absolute';
+        border-radius: 50%;
+        top: 0;
+        left: 50;
+        width: 15%;
+        height: 15%;
+        display: inline-block;        
+    }
+
+    #goButton {
+        position: 'absolute';
+        top: 50;
+        left: 50;
+        width: 25%;
+        height: 25%; 
+    }
+    
   </style>
 
 </head>
@@ -40,26 +83,46 @@
 
   <div id="loadingScreen_0">
     <a>
-      <font size="76">MindGame starting..</font><a />
-      <div id="x"></div>
-      <font size="76"><a onclick="this.innerHTML = 'Test button works!'">Click on this text to try it!</a></font>>
+    <!--img id="loadingScreenBackground" src="" /-->
+    <font size="96">MindGame warming up..</font><a />
+    <div id="x"></div>
+    <font size="76"><a onclick="this.innerHTML = 'Test button works!'">Click on this text to try it!</a></font>>
   </div>
 
+  <div id="nameScreen_1">
+    <img id="nameScreenBackground" src="https://github.com/babblet/LiveHacksTeam5/blob/master/images/name%20screen.png"/>     
+    <!--img id="GoButton" scr= "https://github.com/babblet/LiveHacksTeam5/blob/master/images/name%20button.png"--> 
+    <a onclick="this.innerHTML = 'Test button works!'"><img id="GoButton" src= "https://github.com/babblet/LiveHacksTeam5/blob/master/images/name%20button.png"></a>
+  </div>
 
-  <div id="nameScreen_1"></div>
   <div id="waitingScreen_2_5">
-    <img id="waitingScreenBackground" src="" />
-    <div id="button_1"></div>
-    <div id="button_1"></div>
-    <div id="button_1"></div>
-    <div id="button_1"></div>
+    <img id="waitingScreenBackground" src="https://github.com/babblet/LiveHacksTeam5/blob/master/images/wait.png" />
   </div>
-  <div id="pickNumberScreen_3_7"></div>
-  <div id="takePictureScreen_4"></div>
-  <div id="showPictureScreen_6"></div>
-  <div id="evaluationScreen_8"></div>
-  <div id="scoreScreen_9"></div>
-  <div id="resultScreen_10"></div>
+
+  <div id="pickNumberScreen_3_7">
+    <div id="button_1" src="https://github.com/babblet/LiveHacksTeam5/blob/master/images/1.png"></div>
+    <div id="button_2" src="https://github.com/babblet/LiveHacksTeam5/blob/master/images/2.png"></div>
+    <div id="button_3" src="https://github.com/babblet/LiveHacksTeam5/blob/master/images/3.png"></div>
+    <div id="button_4" src="https://github.com/babblet/LiveHacksTeam5/blob/master/images/4.png"></div>
+  </div>
+
+  <div id="takePictureScreen_4"> <!-- the round circle -->
+    <div id="redCameraCircle">
+  </div>
+
+  <div id="showPictureScreen_6">
+  </div>
+
+  <div id="evaluationScreen_8">
+    <div id="correctAnswer" src="https://github.com/babblet/LiveHacksTeam5/blob/master/images/right%20answer.png"></div>
+    <div id="wrongAnswer" src="https://github.com/babblet/LiveHacksTeam5/blob/master/images/losing%20screen.png"></div>
+  </div>
+
+  <div id="scoreScreen_9">
+  </div>
+
+  <div id="resultScreen_10">
+  </div>
 
 
   <!-- SCRIPTS -->
