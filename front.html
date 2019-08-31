@@ -1,4 +1,4 @@
-<!doctype html>
+</html<!doctype html>
 <html class="no-js" lang="">
 
 <head>
@@ -25,7 +25,7 @@
     }
 
     #button_1 {
-      visibility: visible;        
+      visibility: visible;
       position: fixed;
       top: 0;
       left: 0;
@@ -63,7 +63,7 @@
         width: 30%;
         height: 30%;
         display: inline-block;
-    }    
+    }
 
 
     #nameScreenBackground {
@@ -74,14 +74,14 @@
       height: 100%;
       width: 100%;
     }
-    #numberScreenBackground { 
+    #numberScreenBackground {
       position: fixed;
       top: 0;
-      left: 0;   
+      left: 0;
       height: 100%;
       width: 100%;
     }
-    #correctAnswerBackground {        
+    #correctAnswerBackground {
       height: 100%;
       width: 100%;
     }
@@ -91,13 +91,12 @@
     }
 
     #goButton {
-        position: 'absolute';
-        top: 50;
-        left: 50;
-        width: 25%;
-        height: 25%;
+      position: 'absolute';
+      top: 50;
+      left: 50;
+      width: 25%;
+      height: 25%;
     }
-
   </style>
 
 </head>
@@ -128,13 +127,13 @@
 
   <div id="pickNumberScreen_3_7" class="screen">
     <img id="numberScreenBackground" src="https://raw.githubusercontent.com/babblet/LiveHacksTeam5/master/images/choices.png" />
-      <font id ="button_1" size="150" onclick="this.innerHTML = '1'" ></font> 
-      <font id ="button_2" size="150" onclick="this.innerHTML = '2'" ></font>    
-      <font id ="button_3" size="150" onclick="this.innerHTML = '4'" ></font>    
-      <font id ="button_4" size="150" onclick="this.innerHTML = '3'" ></font>
+      <font id ="button_1" size="150" onclick="send_button_select_press(1)" ></font>
+      <font id ="button_2" size="150" onclick="send_button_select_press(2)" ></font>
+      <font id ="button_3" size="150" onclick="send_button_select_press(4)" ></font>
+      <font id ="button_4" size="150" onclick="send_button_select_press(3)" ></font>
   </div>
 
-  <div id="takePictureScreen_4" class="screen"> 
+  <div id="takePictureScreen_4" class="screen">
     <div id="redCameraCircle"></div>
   </div>
 
@@ -147,58 +146,99 @@
     <div id="wrongAnswerBackground" src="https://raw.githubusercontent.com/babblet/LiveHacksTeam5/master/images/losing_screen.png"></div>
   </div>
 
-  <div id="scoreScreen_9" class="screen">
-  </div>
+    <div id="scoreScreen_9" class="screen">
+    </div>
 
-  <div id="resultScreen_10" class="screen">
-  </div>
+    <div id="resultScreen_10" class="screen">
+    </div>
 
 
-  <!-- SCRIPTS -->
+    <!-- SCRIPTS -->
 
-  <script type="text/javascript">
+    <script type="text/javascript">
+        const ws = new WebSocket('ws://stagecast.se/api/events/MindReader/ws');
 
-    window.addEventListener('load', () => {
-      const ws = new WebSocket(`ws://stagecast.se/api/events/MindReader/ws?x-user-listener=1`);
 
-      var state = {
-        current_screen: "loadingScreen_0",
-        user_id: stagecast.getUserId(),
-      }
+        var state = {
+          current_screen: "loadingScreen_0",
+          user_id: 1, //stagecast.getUserId(),
+          command_type: undefined,
+        }
 
-      ws_authenticate = () => {
-        ws.send(JSON.stringify({
-          token: stagecast.getToken(),
-        }))
-      }
+        var ws_authenticate = () => {
+          ws.send(JSON.stringify({
+            email: "fkarlsson@solidsport.com",//stagecast.getToken(),
+            password: "Team5Team5",
+          }));
+        }
 
-      let ws_send = (type, data) => {
-        ws.send(JSON.stringify({
-          type: type,
-          user: {
-            id: state.user_id,
-            ...data,
+        var ws_send = (type, data) => {
+          ws.send(JSON.stringify({
+            type: type,
+            user: {
+              id: state.user_id,
+              ...data,
+            },
+          }));
+        }
+
+        let handle_message = (text) => {
+          if (state.command_type === 'command: game') {
+            if (text === '') {
+            } else if (text === 'choices') {
+
+            }
           }
-        }));
-      }
 
-      ws.onmessage = (message) => {
-        let data = message.data.readAsText();
-        document.getElementById('x').innerHTML = data;
-        if (data === 'ok') {
-          ws_send('auth', {
-            name: 'something',
+          state.command_type = text;
+        };
+
+        ws.onmessage = (message) => {
+          if(typeof message.data.text !== 'function') {
+            let json = JSON.parse(message.data);
+            console.log(json);
+          } else {
+            message.data.text().then((text) => {
+              handle_message(text);
+            }).catch((e) => {
+              console.log(e);
+            });
+          }
+        }
+
+        let send_name = (input) => {
+          ws_send('name', {
+            name: input,
           })
         }
-      }
 
-      //INIT
-      ws.onopen = () => {
-        ws_authenticate();
-      }
-    });
-  </script>
+        let send_button_select_press = (input) => {
+          ws_send('user_number', {
+            number: input,
+          });
+        }
+
+        let send_button_guess_press = (input) => {
+          ws_send('user_guess', {
+            guess: input,
+          });
+        }
+
+        let take_picture = () => {
+          ws_send('picture', {
+            picture: "Image data",
+          })
+        }
+
+        //INIT
+        ws.onopen = () => {
+          ws_authenticate();
+          send_name('fabian');
+        }
+
+
+    </script>
 
 </body>
 
-</html>
+</html>>
