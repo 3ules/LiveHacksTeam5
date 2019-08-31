@@ -54,6 +54,16 @@
       height: 50%;
     }
 
+    #nameText {
+      visibility: visible;  
+      position: fixed;
+      top: 30%; 
+      left: 10%;
+      width: 82%;
+      height: 9%; 
+      z-index: 1000;       
+    }
+
     #redCameraCircle {
         background-color: #E64339;
         position: 'absolute';
@@ -65,16 +75,24 @@
         display: inline-block;
     }
 
+    #loadingScreen_0 {
+        visibility: hidden;
+    }
 
     #nameScreenBackground {
+      position: fixed;
+      top: 0;
+      left: 0;
       height: 100%;
       width: 100%;
     }
     #waitingScreenBackground {
+      visibility: hidden;
       height: 100%;
       width: 100%;
     }
     #numberScreenBackground {
+      visibility: hidden;          
       position: fixed;
       top: 0;
       left: 0;
@@ -119,6 +137,10 @@
     <img id="nameScreenBackground" src="https://raw.githubusercontent.com/babblet/LiveHacksTeam5/master/images/name_screen.png" />
     <!--img id="GoButton" scr= "https://github.com/babblet/LiveHacksTeam5/blob/master/images/name%20button.png"-->
     <!--a onclick="this.innerHTML = 'Test button works!'"><img id="goButton" src= "https://github.com/babblet/LiveHacksTeam5/master/images/name_button.png"></a-->
+
+    <input id ="nameText" type="text">    
+    <input id ="nameSubmit" type="button" value="Get User Name(udid)" onclick="send_name(document.getElementById('nameSubmit').value);">
+
   </div>
 
   <div id="waitingScreen_2_5" class="screen">
