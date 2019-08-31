@@ -18,6 +18,8 @@
       background-color: #112531;
       color: #E54D72;
       text-align: center;
+      width: 100%;
+      height: 100%;
     }
 
     #button_1 {
@@ -51,6 +53,10 @@
       width: 50%;
       height: 50%;
     }
+    #waitingScreenBackground {
+      height: 100%;
+      width: 100%;
+    }
 
     #redCameraCircle {
         background-color: #E64339;
@@ -81,7 +87,7 @@
 
   <!-- html code inside of the body tag: structure: -->
 
-  <div id="loadingScreen_0">
+  <div id="loadingScreen_0" class="screen">
     <a>
     <!--img id="loadingScreenBackground" src="" /-->
     <font size="96">MindGame warming up..</font><a />
@@ -89,39 +95,39 @@
     <font size="76"><a onclick="this.innerHTML = 'Test button works!'">Click on this text to try it!</a></font>>
   </div>
 
-  <div id="nameScreen_1">
+  <div id="nameScreen_1" class="screen">
     <img id="nameScreenBackground" src="https://github.com/babblet/LiveHacksTeam5/blob/master/images/name%20screen.png"/>
     <!--img id="GoButton" scr= "https://github.com/babblet/LiveHacksTeam5/blob/master/images/name%20button.png"-->
     <a onclick="this.innerHTML = 'Test button works!'"><img id="GoButton" src= "https://github.com/babblet/LiveHacksTeam5/blob/master/images/name%20button.png"></a>
   </div>
 
-  <div id="waitingScreen_2_5">
+  <div id="waitingScreen_2_5" class="screen">
     <img id="waitingScreenBackground" src="https://raw.githubusercontent.com/babblet/LiveHacksTeam5/master/images/wait.png" />
   </div>
 
-  <div id="pickNumberScreen_3_7">
+  <div id="pickNumberScreen_3_7" class="screen">
     <div id="button_1" src="https://raw.githubusercontent/babblet/LiveHacksTeam5/blob/master/images/1.png"></div>
     <div id="button_2" src="raw.githubusercontent/babblet/LiveHacksTeam5/blob/master/images/2.png"></div>
     <div id="button_3" src="raw.githubusercontent/babblet/LiveHacksTeam5/blob/master/images/3.png"></div>
     <div id="button_4" src="raw.githubusercontent/babblet/LiveHacksTeam5/blob/master/images/4.png"></div>
   </div>
 
-  <div id="takePictureScreen_4"> <!-- the round circle -->
+  <div id="takePictureScreen_4" class="screen"> <!-- the round circle -->
     <div id="redCameraCircle">
   </div>
 
-  <div id="showPictureScreen_6">
+  <div id="showPictureScreen_6" class="screen">
   </div>
 
-  <div id="evaluationScreen_8">
+  <div id="evaluationScreen_8" class="screen">
     <div id="correctAnswer" src="raw.githubusercontent/babblet/LiveHacksTeam5/blob/master/images/right%20answer.png"></div>
     <div id="wrongAnswer" src="raw.githubusercontent/babblet/LiveHacksTeam5/blob/master/images/losing%20screen.png"></div>
   </div>
 
-  <div id="scoreScreen_9">
+  <div id="scoreScreen_9" class="screen">
   </div>
 
-  <div id="resultScreen_10">
+  <div id="resultScreen_10" class="screen">
   </div>
 
 
